@@ -23,7 +23,6 @@ body {
 .sun-icon {
   height: 140px;
   width: 140px;
-  background-color: black;
 }
 
 .header-icon-section {
@@ -33,7 +32,7 @@ body {
   align-items: center;
   height: 100%;
   width: 200px;
-  background-color: aqua;
+  background-color: rgb(39, 183, 250);
 }
 
 .app-title {

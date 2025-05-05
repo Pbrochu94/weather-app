@@ -40,3 +40,41 @@ body {
   font-size: var(--baseTypo);
   background-color: orange;
 }
+
+/*main section*/
+
+.main-wrapper {
+  display: grid;
+  grid-template-rows: 1fr 7fr;
+}
+
+/*Search bar section*/
+
+.search-bar-wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+}
+
+.search-bar {
+  flex-grow: 0;
+  height: 50%;
+  border-radius: 16px;
+  width: 400px;
+  font-size: 24px;
+}
+
+button {
+  margin: 5px;
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+  border-width: 1px;
+}
+/*weather display section*/
+
+.weather-display {
+}

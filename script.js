@@ -13,11 +13,30 @@ let values = {
   currentDateInDigit: new Date().toLocaleDateString().replaceAll("/", "-"),
   currentDay: new Date().toDateString().split(" ")[0],
   citySearched: "montreal",
+  imageBank: {
+    sunny: {
+      background: "img/sunny-background.jpg",
+      icon: "img/sunny-card-icon.png",
+    },
+    cloudy: {
+      background: "img/cloudy-background.jpg",
+      icon: "img/cloudy-card-icon.png",
+    },
+    rainy: {
+      background: "img/rainy-background.jpg",
+      icon: "img/rainy-card-icon.png",
+    },
+    thunder: {
+      background: "img/thunder-background.jpg",
+      icon: "img/thunder-card-icon.png",
+    },
+  },
 };
 
 let selectors = {
   button: document.querySelector("button"),
   searchBar: document.querySelector(".search-bar"),
+  weatherWrap: document.querySelector(".weather-display"),
 };
 
 let functions = {
@@ -53,4 +72,14 @@ let domManipulations = {
   },
 };
 
+/*Testing area */
+
+function test() {
+  console.log(selectors.weatherWrap);
+  let card = selectors.weatherWrap.querySelector(".mid");
+  card.querySelector("img").setAttribute("src", values.imageBank.sunny.icon);
+  console.log(card);
+}
+
+test();
 console.log(new Date().toLocaleDateString());

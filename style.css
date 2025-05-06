@@ -1,12 +1,12 @@
 :root {
   --baseTypo: 24px;
-  --baseBlue: aqua;
+  --baseBlue: rgb(38, 57, 119);
+  --baseOrange: rgb(245, 194, 55);
 }
 
 body {
   width: 100vw;
   height: 100vh;
-  background-color: red;
   display: grid;
   grid-template-rows: 1fr 4fr;
   box-sizing: border-box;
@@ -15,15 +15,30 @@ body {
 
 .header-wrapper {
   background-color: var(--baseBlue);
-}
-
-.main-wrapper {
-  background-color: azure;
+  box-shadow: 0px 1px 10px 1px;
+  z-index: 1;
 }
 
 .sun-icon {
   height: 140px;
   width: 140px;
+}
+
+.app-title {
+  margin-top: 0%;
+  font-size: var(--baseTypo);
+  font-size: 1.8em;
+  color: var(--baseOrange);
+  font-weight: bold;
+  text-align: center;
+  line-height: 0.7em;
+}
+
+.main-wrapper {
+  background: url("img/sunny-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0px -250px;
 }
 
 .header-icon-section {
@@ -36,12 +51,6 @@ body {
   background-color: var(--baseBlue);
 }
 
-.app-title {
-  margin-top: 0%;
-  font-size: var(--baseTypo);
-  background-color: orange;
-}
-
 /*main section*/
 
 .main-wrapper {
@@ -52,12 +61,12 @@ body {
 /*Search bar section*/
 
 .search-bar-wrap {
+  margin-top: 10px;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: red;
 }
 
 .search-bar {
@@ -66,6 +75,7 @@ body {
   border-radius: 16px;
   width: 400px;
   font-size: 24px;
+  z-index: 1;
 }
 
 button {
@@ -78,7 +88,6 @@ button {
 /*weather display section*/
 
 .weather-display {
-  background-color: purple;
   display: grid;
   grid-template-columns: repeat(5, 4fr);
   padding: 0px 50px 0px 50px;
@@ -87,10 +96,10 @@ button {
 }
 
 .day-card {
-  background-color: beige;
+  background-color: rgba(245, 245, 220, 0.349);
   margin: 20px;
   height: 90%;
-  border-radius: 2px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,7 +117,6 @@ button {
 }
 
 .temp-wrap {
-  background-color: aquamarine;
   height: auto;
   box-sizing: border-box;
   margin: 0%;

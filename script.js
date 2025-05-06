@@ -1,6 +1,17 @@
 console.log("Hello");
 
-let userValues = {
+let values = {
+  daysOfWeekArr: [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "thursday",
+    "friday",
+    "Saturday",
+    "Sunday",
+  ],
+  currentDateInDigit: new Date().toLocaleDateString().replaceAll("/", "-"),
+  currentDay: new Date().toDateString().split(" ")[0],
   citySearched: "montreal",
 };
 
@@ -12,8 +23,8 @@ let selectors = {
 let functions = {
   getCity: function () {
     let name = selectors.searchBar.value;
-    userValues.citySearched = functions.isCityValid(name);
-    console.log(userValues.citySearched);
+    values.citySearched = functions.isCityValid(name);
+    console.log(values.citySearched);
     domManipulations.weatherDisplay();
   },
   isCityValid: function (cityName) {
@@ -21,7 +32,7 @@ let functions = {
   },
   get5Days: async function () {
     let request = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${userValues.citySearched}/2025-05-04/2025-05-08?unitGroup=metric&key=MJEGRF56UJXUSESDCMU4QTNLR`,
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${values.citySearched}/2025-05-04/2025-05-08?unitGroup=metric&key=MJEGRF56UJXUSESDCMU4QTNLR`,
     );
     let jsonRequest = await request.json();
     console.log(jsonRequest);
@@ -42,5 +53,4 @@ let domManipulations = {
   },
 };
 
-let date = new Date();
-console.log(date.toDateString().split(" ")[0]);
+console.log(new Date().toLocaleDateString());

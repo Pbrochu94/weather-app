@@ -21,7 +21,7 @@ let functions = {
   },
   get5Days: async function () {
     let request = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${userValues.citySearched}/2025-05-03/2025-05-07?unitGroup=metric&key=MJEGRF56UJXUSESDCMU4QTNLR`,
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${userValues.citySearched}/2025-05-04/2025-05-08?unitGroup=metric&key=MJEGRF56UJXUSESDCMU4QTNLR`,
     );
     let jsonRequest = await request.json();
     console.log(jsonRequest);
@@ -42,4 +42,5 @@ let domManipulations = {
   },
 };
 
-domManipulations.weatherDisplay();
+let date = new Date();
+console.log(date.toDateString().split(" ")[0]);

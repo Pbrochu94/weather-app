@@ -77,4 +77,67 @@ button {
 /*weather display section*/
 
 .weather-display {
+  background-color: purple;
+  display: grid;
+  grid-template-columns: repeat(5, 4fr);
+  padding: 0px 50px 0px 50px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.day-card {
+  background-color: beige;
+  margin: 20px;
+  height: 90%;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.card-image {
+  height: 30%;
+  width: 60%;
+}
+
+.weather-status-field {
+  margin: 0%;
+  padding: 0%;
+}
+
+.temp-wrap {
+  background-color: aquamarine;
+  height: auto;
+  box-sizing: border-box;
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.temp-field {
+  margin: 40px 0% 40px 0%;
+  font-size: 4em;
+}
+
+.temp-felt {
+  margin: 0%;
+  font-size: em;
+}
+
+.rain-prob-icon {
+  height: 100%;
+  width: 100%;
+  margin: 0%;
+}
+
+.rain-prob-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 0%;
+  margin-top: auto;
+  height: 10%;
+  width: 20%;
 }

@@ -94,9 +94,7 @@ let domManipulations = {
     cardPointer.querySelector(".day-field").textContent =
       values.daysOfWeekArr[values.daysIndexTracker];
   },
-  changeIcon: function (cardPointer) {
-    //cardPointer.querySelector("")
-  },
+  changeIcon: function (cardPointer) {},
   changeWeatherFelt: function (cardPointer) {},
   changeProb: function (cardPointer) {},
 };

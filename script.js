@@ -76,9 +76,14 @@ let domManipulations = {
 
 function test() {
   console.log(selectors.weatherWrap);
-  let card = selectors.weatherWrap.querySelector(".mid");
-  card.querySelector("img").setAttribute("src", values.imageBank.sunny.icon);
-  console.log(card);
+  selectors.weatherWrap
+    .querySelector(".mid")
+    .querySelector("img")
+    .setAttribute("src", values.imageBank.rainy.icon);
+  selectors.weatherWrap
+    .querySelector(".right")
+    .querySelector("img")
+    .setAttribute("src", values.imageBank.thunder.icon);
 }
 
 test();

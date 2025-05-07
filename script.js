@@ -33,29 +33,13 @@ let selectors = {
 };
 
 let functions = {
-  setupFirstof5DaysTracker: function () {
+  startingIndexOf5Days: function () {
     //initialise the index of the first day of the 5 days sequence
     values.daysIndexTracker =
       (values.daysOfWeekArr.indexOf(values.currentDay) - //make sure it doesnt go out of bound of the array and loop around
         2 +
         values.daysOfWeekArr.length) %
       values.daysOfWeekArr.length;
-  },
-  changeCards: function () {
-    //update the 5 days card with correct info
-    selectors.weatherWrap
-      .querySelectorAll(".day-card")
-      .forEach((currentDayPoint) => {
-        console.log(values.daysIndexTracker);
-        domManipulations.changeDay(currentDayPoint);
-        domManipulations.changeIcon(currentDayPoint);
-        domManipulations.changeWeatherFelt(currentDayPoint);
-        domManipulations.changeProb(currentDayPoint);
-        functions.updateDayTracker(
-          values.daysIndexTracker,
-          values.daysOfWeekArr,
-        );
-      });
   },
   updateDayTracker: function (currentDayIndex, arr) {
     values.daysIndexTracker = (currentDayIndex + 1) % arr.length;
@@ -86,31 +70,37 @@ let listeners = {
 };
 
 let domManipulations = {
+  changeCards: function () {
+    //update the 5 days card with correct infos
+    functions.startingIndexOf5Days();
+    selectors.weatherWrap
+      .querySelectorAll(".day-card")
+      .forEach((currentDayPoint) => {
+        domManipulations.changeDay(currentDayPoint);
+        domManipulations.changeIcon(currentDayPoint);
+        domManipulations.changeWeatherFelt(currentDayPoint);
+        domManipulations.changeProb(currentDayPoint);
+        functions.updateDayTracker(
+          values.daysIndexTracker,
+          values.daysOfWeekArr,
+        );
+      });
+  },
   weatherDisplay: async function () {
     let array = await functions.get5Days();
     console.log(array);
   },
-  changeDay: function (CardPointer) {
-    console.log(CardPointer.querySelector("h1").textContent);
-    CardPointer.querySelector(".day-field").textContent =
+  changeDay: function (cardPointer) {
+    cardPointer.querySelector(".day-field").textContent =
       values.daysOfWeekArr[values.daysIndexTracker];
   },
-  changeIcon: function (CardPointer) {},
-  changeWeatherFelt: function (CardPointer) {},
-  changeProb: function (CardPointer) {},
+  changeIcon: function (cardPointer) {
+    //cardPointer.querySelector("")
+  },
+  changeWeatherFelt: function (cardPointer) {},
+  changeProb: function (cardPointer) {},
 };
 
 /*Testing area */
-functions.setupFirstof5DaysTracker();
 
-functions.changeCards();
-
-/*function loop() {
-  let arr = ["Mon", "Tue", "Wed", "thu", "fri", "Sat", "Sun"];
-  let index = 2;
-  console.log(arr[index]);
-  index = (index + 1) % arr.length;
-  console.log(arr[index]);
-}
-
-loop();*/
+domManipulations.changeCards();

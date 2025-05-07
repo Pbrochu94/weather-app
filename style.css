@@ -124,11 +124,25 @@ button {
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
+}
+
+.temp-inner-wrap {
+  display: flex;
+  align-items: center;
 }
 
 .temp-field {
   margin: 40px 0% 40px 0%;
   font-size: 4em;
+  width: auto;
+  padding: 0%;
+  height: auto;
+}
+
+.degrees {
+  height: 4em;
+  display: flex;
 }
 
 .temp-felt {

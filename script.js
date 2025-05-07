@@ -2,6 +2,15 @@ console.log("Hello");
 
 let values = {
   daysOfWeekArr: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  eachDayInfo: [
+    { day: "Mon", status: "cloudy", temp: 19, felt: 15, prob: 20 },
+    { day: "Tue", status: "thunder", temp: 22, felt: 17, prob: 10 },
+    { day: "Wed", status: "rainy", temp: 12, felt: 10, prob: 80 },
+    { day: "Tue", status: "rainy", temp: 14, felt: 18, prob: 100 },
+    { day: "Fri", status: "sunny", temp: 23, felt: 20, prob: 10 },
+    { day: "Sat", status: "sunny", temp: 19, felt: 15, prob: 20 },
+    { day: "Sun", status: "cloudy", temp: 19, felt: 17, prob: 40 },
+  ],
   currentDateInDigit: new Date().toLocaleDateString().replaceAll("/", "-"),
   daysIndexTracker: undefined,
   currentDay: new Date().toDateString().split(" ")[0],
@@ -78,6 +87,8 @@ let domManipulations = {
       .forEach((currentDayPoint) => {
         domManipulations.changeDay(currentDayPoint);
         domManipulations.changeIcon(currentDayPoint);
+        domManipulations.changeStatus(currentDayPoint);
+        domManipulations.changeTemp(currentDayPoint);
         domManipulations.changeWeatherFelt(currentDayPoint);
         domManipulations.changeProb(currentDayPoint);
         functions.updateDayTracker(
@@ -94,9 +105,30 @@ let domManipulations = {
     cardPointer.querySelector(".day-field").textContent =
       values.daysOfWeekArr[values.daysIndexTracker];
   },
-  changeIcon: function (cardPointer) {},
-  changeWeatherFelt: function (cardPointer) {},
-  changeProb: function (cardPointer) {},
+  changeIcon: function (cardPointer) {
+    cardPointer
+      .querySelector(".card-icon")
+      .setAttribute(
+        "src",
+        `img/${values.eachDayInfo[values.daysIndexTracker].status}-card-icon.png`,
+      );
+  },
+  changeStatus: function (cardPointer) {
+    cardPointer.querySelector(".weather-status-field").textContent =
+      values.eachDayInfo[values.daysIndexTracker].status;
+  },
+  changeTemp: function (cardPointer) {
+    cardPointer.querySelector(".temp-field").textContent =
+      values.eachDayInfo[values.daysIndexTracker].temp + "°C";
+  },
+  changeWeatherFelt: function (cardPointer) {
+    cardPointer.querySelector(".temp-felt").textContent =
+      values.eachDayInfo[values.daysIndexTracker].felt + "°C";
+  },
+  changeProb: function (cardPointer) {
+    cardPointer.querySelector(".prob-text").textContent =
+      values.eachDayInfo[values.daysIndexTracker].prob + "%";
+  },
 };
 
 /*Testing area */

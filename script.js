@@ -1,16 +1,9 @@
 console.log("Hello");
 
 let values = {
-  daysOfWeekArr: [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "thursday",
-    "friday",
-    "Saturday",
-    "Sunday",
-  ],
+  daysOfWeekArr: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   currentDateInDigit: new Date().toLocaleDateString().replaceAll("/", "-"),
+  daysIndexTracker: undefined,
   currentDay: new Date().toDateString().split(" ")[0],
   citySearched: "montreal",
   imageBank: {
@@ -40,6 +33,33 @@ let selectors = {
 };
 
 let functions = {
+  setupFirstof5DaysTracker: function () {
+    //initialise the index of the first day of the 5 days sequence
+    values.daysIndexTracker =
+      (values.daysOfWeekArr.indexOf(values.currentDay) - //make sure it doesnt go out of bound of the array and loop around
+        2 +
+        values.daysOfWeekArr.length) %
+      values.daysOfWeekArr.length;
+  },
+  changeCards: function () {
+    //update the 5 days card with correct info
+    selectors.weatherWrap
+      .querySelectorAll(".day-card")
+      .forEach((currentDayPoint) => {
+        console.log(values.daysIndexTracker);
+        domManipulations.changeDay(currentDayPoint);
+        domManipulations.changeIcon(currentDayPoint);
+        domManipulations.changeWeatherFelt(currentDayPoint);
+        domManipulations.changeProb(currentDayPoint);
+        functions.updateDayTracker(
+          values.daysIndexTracker,
+          values.daysOfWeekArr,
+        );
+      });
+  },
+  updateDayTracker: function (currentDayIndex, arr) {
+    values.daysIndexTracker = (currentDayIndex + 1) % arr.length;
+  },
   getCity: function () {
     let name = selectors.searchBar.value;
     values.citySearched = functions.isCityValid(name);
@@ -70,21 +90,27 @@ let domManipulations = {
     let array = await functions.get5Days();
     console.log(array);
   },
+  changeDay: function (CardPointer) {
+    console.log(CardPointer.querySelector("h1").textContent);
+    CardPointer.querySelector(".day-field").textContent =
+      values.daysOfWeekArr[values.daysIndexTracker];
+  },
+  changeIcon: function (CardPointer) {},
+  changeWeatherFelt: function (CardPointer) {},
+  changeProb: function (CardPointer) {},
 };
 
 /*Testing area */
+functions.setupFirstof5DaysTracker();
 
-function test() {
-  console.log(selectors.weatherWrap);
-  selectors.weatherWrap
-    .querySelector(".mid")
-    .querySelector("img")
-    .setAttribute("src", values.imageBank.rainy.icon);
-  selectors.weatherWrap
-    .querySelector(".right")
-    .querySelector("img")
-    .setAttribute("src", values.imageBank.thunder.icon);
+functions.changeCards();
+
+/*function loop() {
+  let arr = ["Mon", "Tue", "Wed", "thu", "fri", "Sat", "Sun"];
+  let index = 2;
+  console.log(arr[index]);
+  index = (index + 1) % arr.length;
+  console.log(arr[index]);
 }
 
-test();
-console.log(new Date().toLocaleDateString());
+loop();*/

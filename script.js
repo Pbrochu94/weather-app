@@ -1,5 +1,3 @@
-console.log("Hello");
-
 let values = {
   daysOfWeekArr: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   eachDayInfo: [
@@ -72,6 +70,12 @@ let functions = {
   },
   changeEachDaysValues: function (fetchedInfoArr) {
     console.log(fetchedInfoArr);
+    for (let i = 0; i < fetchedInfoArr.length; i++) {
+      values.eachDayInfo[i].temp = fetchedInfoArr[i].temp;
+      console.log(values.eachDayInfo[i].temp, fetchedInfoArr[i].temp);
+      values.eachDayInfo[i].felt = fetchedInfoArr[i].feelslike;
+      console.log(values.eachDayInfo[i].felt, fetchedInfoArr[i].feelslike);
+    }
   },
 };
 
@@ -82,10 +86,10 @@ let listeners = {
 };
 
 let domManipulations = {
-  changeDays: function () {
+  changeDays: async function () {
     //update the 5 days card with correct infos
     functions.getCity();
-    let fetchedValues = domManipulations.weatherDisplay();
+    let fetchedValues = await functions.get5Days();
     functions.changeEachDaysValues(fetchedValues);
     functions.startingIndexOf5Days();
     selectors.weatherWrap
@@ -102,11 +106,6 @@ let domManipulations = {
           values.daysOfWeekArr,
         );
       });
-  },
-  weatherDisplay: async function () {
-    let array = await functions.get5Days();
-    console.log(array);
-    return array;
   },
   changeDay: function (cardPointer) {
     cardPointer.querySelector(".day-field").textContent =

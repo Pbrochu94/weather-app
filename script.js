@@ -55,9 +55,10 @@ let functions = {
   },
   getCity: function () {
     let name = selectors.searchBar.value;
-    values.citySearched = functions.isCityValid(name);
+    if (!selectors.searchBar.value === "") {
+      values.citySearched = functions.isCityValid(name);
+    }
     console.log(values.citySearched);
-    domManipulations.weatherDisplay();
   },
   isCityValid: function (cityName) {
     return cityName.toLowerCase();
@@ -67,8 +68,10 @@ let functions = {
       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${values.citySearched}/2025-05-04/2025-05-08?unitGroup=metric&key=MJEGRF56UJXUSESDCMU4QTNLR`,
     );
     let jsonRequest = await request.json();
-    console.log(jsonRequest);
     return jsonRequest.days;
+  },
+  changeEachDaysValues: function (fetchedInfoArr) {
+    console.log(fetchedInfoArr);
   },
 };
 
@@ -79,8 +82,11 @@ let listeners = {
 };
 
 let domManipulations = {
-  changeCards: function () {
+  changeDays: function () {
     //update the 5 days card with correct infos
+    functions.getCity();
+    let fetchedValues = domManipulations.weatherDisplay();
+    functions.changeEachDaysValues(fetchedValues);
     functions.startingIndexOf5Days();
     selectors.weatherWrap
       .querySelectorAll(".day-card")
@@ -100,6 +106,7 @@ let domManipulations = {
   weatherDisplay: async function () {
     let array = await functions.get5Days();
     console.log(array);
+    return array;
   },
   changeDay: function (cardPointer) {
     cardPointer.querySelector(".day-field").textContent =
@@ -133,4 +140,4 @@ let domManipulations = {
 
 /*Testing area */
 
-domManipulations.changeCards();
+domManipulations.changeDays();

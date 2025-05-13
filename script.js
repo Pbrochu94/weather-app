@@ -12,6 +12,9 @@ let values = {
   currentDateInDigit: new Date().toLocaleDateString().replaceAll("/", "-"),
   daysIndexTracker: undefined,
   currentDay: new Date().toDateString().split(" ")[0],
+  twoDaysBeforeTodayDigit: new Date().getUTCDate() - 2,
+  twoDaysAfterTodayDigit: new Date().getUTCDate() + 2,
+  currentMonthDigit: new Date().getUTCMonth(),
   citySearched: "montreal",
   imageBank: {
     sunny: {
@@ -63,7 +66,7 @@ let functions = {
   },
   get5Days: async function () {
     let request = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${values.citySearched}/2025-05-04/2025-05-08?unitGroup=metric&key=MJEGRF56UJXUSESDCMU4QTNLR`,
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${values.citySearched}/2025-${values.currentMonthDigit}-${values.twoDaysBeforeTodayDigit}/2025-${values.currentMonthDigit}-${values.twoDaysAfterTodayDigit}?unitGroup=metric&key=MJEGRF56UJXUSESDCMU4QTNLR`,
     );
     let jsonRequest = await request.json();
     return jsonRequest.days;
@@ -72,9 +75,10 @@ let functions = {
     console.log(fetchedInfoArr);
     for (let i = 0; i < fetchedInfoArr.length; i++) {
       values.eachDayInfo[i].temp = fetchedInfoArr[i].temp;
-      console.log(values.eachDayInfo[i].temp, fetchedInfoArr[i].temp);
       values.eachDayInfo[i].felt = fetchedInfoArr[i].feelslike;
       console.log(values.eachDayInfo[i].felt, fetchedInfoArr[i].feelslike);
+      values.eachDayInfo[i].status = fetchedInfoArr[i].conditions.toLowerCase();
+      values.eachDayInfo[i].prob = fetchedInfoArr[i].precipprob;
     }
   },
 };
@@ -86,7 +90,7 @@ let listeners = {
 };
 
 let domManipulations = {
-  changeDays: async function () {
+  refreshCards: async function () {
     //update the 5 days card with correct infos
     functions.getCity();
     let fetchedValues = await functions.get5Days();
@@ -139,4 +143,4 @@ let domManipulations = {
 
 /*Testing area */
 
-domManipulations.changeDays();
+domManipulations.refreshCards();

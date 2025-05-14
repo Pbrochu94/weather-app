@@ -21,13 +21,13 @@ let values = {
       background: "img/sunny-background.jpg",
       icon: "img/sunny-card-icon.png",
     },
-    cloudy: {
-      background: "img/cloudy-background.jpg",
-      icon: "img/cloudy-card-icon.png",
+    cloud: {
+      background: "img/cloud-background.jpg",
+      icon: "img/cloud-card-icon.png",
     },
-    rainy: {
-      background: "img/rainy-background.jpg",
-      icon: "img/rainy-card-icon.png",
+    rain: {
+      background: "img/rain-background.jpg",
+      icon: "img/rain-card-icon.png",
     },
     thunder: {
       background: "img/thunder-background.jpg",
@@ -83,12 +83,6 @@ let functions = {
   },
 };
 
-let listeners = {
-  button: (function () {
-    selectors.button.addEventListener("click", functions.getCity);
-  })(),
-};
-
 let domManipulations = {
   refreshCards: async function () {
     //update the 5 days card with correct infos
@@ -116,12 +110,12 @@ let domManipulations = {
       values.daysOfWeekArr[values.daysIndexTracker];
   },
   changeIcon: function (cardPointer) {
+    let imageLink =
+      values.eachDayInfo[values.daysIndexTracker].status.split(",");
+    console.log(imageLink);
     cardPointer
       .querySelector(".card-icon")
-      .setAttribute(
-        "src",
-        `img/${values.eachDayInfo[values.daysIndexTracker].status}-card-icon.png`,
-      );
+      .setAttribute("src", `img/${imageLink[0]}-card-icon.png`);
   },
   changeStatus: function (cardPointer) {
     cardPointer.querySelector(".weather-status-field").textContent =
@@ -138,6 +132,12 @@ let domManipulations = {
   changeProb: function (cardPointer) {
     cardPointer.querySelector(".prob-text").textContent =
       values.eachDayInfo[values.daysIndexTracker].prob + "%";
+  },
+};
+
+let listeners = {
+  button: function () {
+    selectors.button.addEventListener("click", domManipulations.refreshCards);
   },
 };
 

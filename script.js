@@ -12,8 +12,8 @@ let values = {
   currentDateInDigit: new Date().toLocaleDateString().replaceAll("/", "-"),
   daysIndexTracker: undefined,
   currentDay: new Date().toDateString().split(" ")[0],
-  twoDaysBeforeTodayDigit: new Date().getUTCDate() - 2,
-  twoDaysAfterTodayDigit: new Date().getUTCDate() + 2,
+  twoDaysBeforeTodayDigit: new Date().getUTCDate(),
+  twoDaysAfterTodayDigit: new Date().getUTCDate() + 4,
   currentMonthDigit: new Date().getUTCMonth(),
   citySearched: "montreal",
   imageBank: {
@@ -106,6 +106,7 @@ let domManipulations = {
       });
   },
   changeDay: function (cardPointer) {
+    console.log(cardPointer, values.daysOfWeekArr[values.daysIndexTracker]);
     cardPointer.querySelector(".day-field").textContent =
       values.daysOfWeekArr[values.daysIndexTracker];
   },

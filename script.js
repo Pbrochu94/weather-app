@@ -87,6 +87,7 @@ let domManipulations = {
   refreshCards: async function () {
     //update the 5 days card with correct infos
     functions.getCity();
+    domManipulations.changeWallpaper();
     let fetchedValues = await functions.get5Days();
     functions.changeEachDaysValues(fetchedValues);
     functions.startingIndexOf5Days();
@@ -133,6 +134,12 @@ let domManipulations = {
   changeProb: function (cardPointer) {
     cardPointer.querySelector(".prob-text").textContent =
       values.eachDayInfo[values.daysIndexTracker].prob + "%";
+  },
+  changeWallpaper: function () {
+    document.querySelector(".main-wrapper").setAttribute(
+      "style",
+      `background:url(img/${values.imageBank.eachDayInfo[values.eachDayInfo.indexOf(values[values.currentDay])].status}-background.jpg)`, //MODIFIER ICI QUAND JE VAISN FETCH LE CURRENT DAY OBJECT
+    );
   },
 };
 

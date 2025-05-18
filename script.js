@@ -54,7 +54,27 @@ let functions = {
   updateDayTracker: function (currentDayIndex, arr) {
     values.daysIndexTracker = (currentDayIndex + 1) % arr.length;
   },
-
+  getCity: function () {
+    let name = selectors.searchBar.value;
+    if (!selectors.searchBar.value === "") {
+      values.citySearched = functions.isCityValid(name);
+    }
+    console.log(values.citySearched);
+  },
+  isCityValid: function (cityName) {
+    return cityName.toLowerCase();
+  },
+  get5Days: async function () {
+    let request = await fetch(
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${values.citySearched}/2025-${values.currentMonthDigit}-${values.twoDaysBeforeTodayDigit}/2025-${values.currentMonthDigit}-${values.twoDaysAfterTodayDigit}?unitGroup=metric&key=MJEGRF56UJXUSESDCMU4QTNLR`,
+    );
+    let jsonRequest = await request.json();
+    return jsonRequest.days;
+  },
+  changeEachDaysValues: function (fetchedInfoArr) {
+    console.log(fetchedInfoArr);
+    for (let i = 0; i < fetchedInfoArr.length; i++) {
+      values.eachDayInfo[i].temp = fetchedInfoArr[i].temp;
       values.eachDayInfo[i].felt = fetchedInfoArr[i].feelslike;
       console.log(values.eachDayInfo[i].felt, fetchedInfoArr[i].feelslike);
       values.eachDayInfo[i].status = fetchedInfoArr[i].conditions.toLowerCase();

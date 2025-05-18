@@ -34,13 +34,6 @@ body {
   line-height: 0.7em;
 }
 
-.main-wrapper {
-  background: url("img/sunny-background.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 0px -250px;
-}
-
 .header-icon-section {
   display: flex;
   flex-direction: column;
@@ -54,6 +47,10 @@ body {
 /*main section*/
 
 .main-wrapper {
+  /*background: url("img/sunny-background.jpg");*/
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0px -250px;
   display: grid;
   grid-template-rows: 1fr 7fr;
 }

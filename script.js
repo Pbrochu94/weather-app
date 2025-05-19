@@ -12,9 +12,9 @@ let values = {
   currentDateInDigit: new Date().toLocaleDateString().replaceAll("/", "-"),
   daysIndexTracker: undefined,
   currentDay: new Date().toDateString().split(" ")[0],
-  twoDaysBeforeTodayDigit: new Date().getUTCDate(),
-  twoDaysAfterTodayDigit: new Date().getUTCDate() + 4,
-  currentMonthDigit: new Date().getUTCMonth(),
+  twoDaysBeforeTodayDigit: new Date().getUTCDate() - 2,
+  twoDaysAfterTodayDigit: new Date().getUTCDate() + 2,
+  currentMonthDigit: new Date().getUTCMonth() + 1,
   citySearched: "montreal",
   imageBank: {
     sunny: {
@@ -34,6 +34,7 @@ let values = {
       icon: "img/thunder-card-icon.png",
     },
   },
+  fetchedObject: {},
 };
 
 let selectors = {
@@ -59,7 +60,6 @@ let functions = {
     if (!selectors.searchBar.value === "") {
       values.citySearched = functions.isCityValid(name);
     }
-    console.log(values.citySearched);
   },
   isCityValid: function (cityName) {
     return cityName.toLowerCase();
@@ -69,14 +69,12 @@ let functions = {
       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${values.citySearched}/2025-${values.currentMonthDigit}-${values.twoDaysBeforeTodayDigit}/2025-${values.currentMonthDigit}-${values.twoDaysAfterTodayDigit}?unitGroup=metric&key=MJEGRF56UJXUSESDCMU4QTNLR`,
     );
     let jsonRequest = await request.json();
-    return jsonRequest.days;
+    return jsonRequest;
   },
   changeEachDaysValues: function (fetchedInfoArr) {
-    console.log(fetchedInfoArr);
     for (let i = 0; i < fetchedInfoArr.length; i++) {
       values.eachDayInfo[i].temp = fetchedInfoArr[i].temp;
       values.eachDayInfo[i].felt = fetchedInfoArr[i].feelslike;
-      console.log(values.eachDayInfo[i].felt, fetchedInfoArr[i].feelslike);
       values.eachDayInfo[i].status = fetchedInfoArr[i].conditions.toLowerCase();
       values.eachDayInfo[i].prob = fetchedInfoArr[i].precipprob;
     }
@@ -87,9 +85,9 @@ let domManipulations = {
   refreshCards: async function () {
     //update the 5 days card with correct infos
     functions.getCity();
-    domManipulations.changeWallpaper();
-    let fetchedValues = await functions.get5Days();
-    functions.changeEachDaysValues(fetchedValues);
+    //domManipulations.changeWallpaper();
+    values.fetchedObject = await functions.get5Days();
+    functions.changeEachDaysValues(values.fetchedObject.days);
     functions.startingIndexOf5Days();
     selectors.weatherWrap
       .querySelectorAll(".day-card")
@@ -107,14 +105,12 @@ let domManipulations = {
       });
   },
   changeDay: function (cardPointer) {
-    console.log(cardPointer, values.daysOfWeekArr[values.daysIndexTracker]);
     cardPointer.querySelector(".day-field").textContent =
       values.daysOfWeekArr[values.daysIndexTracker];
   },
   changeIcon: function (cardPointer) {
     let imageLink =
       values.eachDayInfo[values.daysIndexTracker].status.split(",");
-    console.log(imageLink);
     cardPointer
       .querySelector(".card-icon")
       .setAttribute("src", `img/${imageLink[0]}-card-icon.png`);
@@ -124,8 +120,11 @@ let domManipulations = {
       values.eachDayInfo[values.daysIndexTracker].status;
   },
   changeTemp: function (cardPointer) {
+    console.log(values.fetchedObject);
+    console.log(values.daysIndexTracker);
+    console.log(values.fetchedObject.days[values.daysIndexTracker]);
     cardPointer.querySelector(".temp-field").textContent =
-      values.eachDayInfo[values.daysIndexTracker].temp + "°C";
+      values.fetchedObject["days"][values.daysIndexTracker]["temp"];
   },
   changeWeatherFelt: function (cardPointer) {
     cardPointer.querySelector(".temp-felt").textContent =

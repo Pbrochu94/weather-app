@@ -49,6 +49,7 @@ body {
 .main-wrapper {
   /*background: url("img/sunny-background.jpg");*/
   background-size: cover;
+  background-position: 10 10;
   background-repeat: no-repeat;
   background-position: 0px -250px;
   display: grid;

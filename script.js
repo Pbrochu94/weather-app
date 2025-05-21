@@ -21,9 +21,13 @@ let values = {
       background: "img/sunny-background.jpg",
       icon: "img/sunny-card-icon.png",
     },
-    cloud: {
-      background: "img/cloud-background.jpg",
-      icon: "img/cloud-card-icon.png",
+    cloudy: {
+      background: "img/cloudy-background.jpg",
+      icon: "img/cloudy-card-icon.png",
+    },
+    "partially cloudy": {
+      background: "img/partially-cloudy-background.jpg",
+      icon: "img/cloudy-card-icon.png",
     },
     rain: {
       background: "img/rain-background.jpg",
@@ -103,6 +107,7 @@ let domManipulations = {
           values.daysOfWeekArr,
         );
       });
+    domManipulations.changeWallpaper();
   },
   changeDay: function (cardPointer) {
     cardPointer.querySelector(".day-field").textContent =
@@ -120,9 +125,6 @@ let domManipulations = {
       values.eachDayInfo[values.daysIndexTracker].status;
   },
   changeTemp: function (cardPointer) {
-    console.log(values.fetchedObject);
-    console.log(values.daysIndexTracker);
-    console.log(values.fetchedObject.days[values.daysIndexTracker]);
     cardPointer.querySelector(".temp-field").textContent =
       values.fetchedObject["days"][values.daysIndexTracker]["temp"];
   },
@@ -135,10 +137,19 @@ let domManipulations = {
       values.eachDayInfo[values.daysIndexTracker].prob + "%";
   },
   changeWallpaper: function () {
-    document.querySelector(".main-wrapper").setAttribute(
-      "style",
-      `background:url(img/${values.imageBank.eachDayInfo[values.eachDayInfo.indexOf(values[values.currentDay])].status}-background.jpg)`, //MODIFIER ICI QUAND JE VAISN FETCH LE CURRENT DAY OBJECT
+    console.log(
+      document.querySelector(".mid").querySelector(".weather-status-field")
+        .textContent,
     );
+    let currentDayWeather = document
+      .querySelector(".mid")
+      .querySelector(".weather-status-field").textContent;
+    document
+      .querySelector(".main-wrapper")
+      .setAttribute(
+        "style",
+        `background:url(img/${currentDayWeather}-background.jpg)`,
+      );
   },
 };
 

@@ -10,7 +10,7 @@ let values = {
     { day: "Sun", status: "cloudy", temp: 19, felt: 17, prob: 40 },
   ],
   currentDateInDigit: new Date().toLocaleDateString().replaceAll("/", "-"),
-  daysIndexTracker: undefined,
+  daysIndexTracker: 0,
   currentDay: new Date().toDateString().split(" ")[0],
   twoDaysBeforeTodayDigit: new Date().getUTCDate() - 2,
   twoDaysAfterTodayDigit: new Date().getUTCDate() + 2,
@@ -48,14 +48,6 @@ let selectors = {
 };
 
 let functions = {
-  startingIndexOf5Days: function () {
-    //initialise the index of the first day of the 5 days sequence
-    values.daysIndexTracker =
-      (values.daysOfWeekArr.indexOf(values.currentDay) - //make sure it doesnt go out of bound of the array and loop around
-        2 +
-        values.daysOfWeekArr.length) %
-      values.daysOfWeekArr.length;
-  },
   updateDayTracker: function (currentDayIndex, arr) {
     values.daysIndexTracker = (currentDayIndex + 1) % arr.length;
   },
@@ -75,14 +67,6 @@ let functions = {
     let jsonRequest = await request.json();
     return jsonRequest;
   },
-  changeEachDaysValues: function (fetchedInfoArr) {
-    for (let i = 0; i < fetchedInfoArr.length; i++) {
-      values.eachDayInfo[i].temp = fetchedInfoArr[i].temp;
-      values.eachDayInfo[i].felt = fetchedInfoArr[i].feelslike;
-      values.eachDayInfo[i].status = fetchedInfoArr[i].conditions.toLowerCase();
-      values.eachDayInfo[i].prob = fetchedInfoArr[i].precipprob;
-    }
-  },
 };
 
 let domManipulations = {
@@ -91,8 +75,6 @@ let domManipulations = {
     functions.getCity();
     //domManipulations.changeWallpaper();
     values.fetchedObject = await functions.get5Days();
-    functions.changeEachDaysValues(values.fetchedObject.days);
-    functions.startingIndexOf5Days();
     selectors.weatherWrap
       .querySelectorAll(".day-card")
       .forEach((currentDayPoint) => {
@@ -125,6 +107,9 @@ let domManipulations = {
       values.eachDayInfo[values.daysIndexTracker].status;
   },
   changeTemp: function (cardPointer) {
+    let value = values.fetchedObject["days"];
+    console.log(value);
+    console.log(value[values.daysIndexTracker], values.daysIndexTracker);
     cardPointer.querySelector(".temp-field").textContent =
       values.fetchedObject["days"][values.daysIndexTracker]["temp"];
   },

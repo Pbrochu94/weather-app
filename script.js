@@ -53,7 +53,7 @@ let functions = {
   },
   getCity: function () {
     let name = selectors.searchBar.value;
-    if (!selectors.searchBar.value === "") {
+    if (selectors.searchBar.value !== "") {
       values.citySearched = functions.isCityValid(name);
     }
   },
@@ -108,8 +108,6 @@ let domManipulations = {
   },
   changeTemp: function (cardPointer) {
     let value = values.fetchedObject["days"];
-    console.log(value);
-    console.log(value[values.daysIndexTracker], values.daysIndexTracker);
     cardPointer.querySelector(".temp-field").textContent =
       values.fetchedObject["days"][values.daysIndexTracker]["temp"];
   },
@@ -122,10 +120,11 @@ let domManipulations = {
       values.eachDayInfo[values.daysIndexTracker].prob + "%";
   },
   changeWallpaper: function () {
-    console.log(
-      document.querySelector(".mid").querySelector(".weather-status-field")
-        .textContent,
-    );
+    let condition = document
+      .querySelector(".mid")
+      .querySelector(".weather-status-field").textContent;
+    document.querySelector(".main-wrapper").style.background =
+      `url(/${condition}-wallpaper.jpg)`;
     let currentDayWeather = document
       .querySelector(".mid")
       .querySelector(".weather-status-field").textContent;
@@ -139,9 +138,9 @@ let domManipulations = {
 };
 
 let listeners = {
-  button: function () {
+  button: (function () {
     selectors.button.addEventListener("click", domManipulations.refreshCards);
-  },
+  })(),
 };
 
 /*Testing area */

@@ -10,8 +10,8 @@ let values = {
     { day: "Sun", status: "cloudy", temp: 19, felt: 17, prob: 40 },
   ],
   currentDateInDigit: new Date().toLocaleDateString().replaceAll("/", "-"),
-  daysIndexTracker: 0,
   currentDay: new Date().toDateString().split(" ")[0],
+  daysIndexTracker: 0,
   twoDaysBeforeTodayDigit: new Date().getUTCDate() - 2,
   twoDaysAfterTodayDigit: new Date().getUTCDate() + 2,
   currentMonthDigit: new Date().getUTCMonth() + 1,
@@ -71,8 +71,9 @@ let functions = {
 
 let domManipulations = {
   refreshCards: async function () {
-    //update the 5 days card with correct infos
-    functions.getCity();
+    (values.daysIndexTracker = values.daysOfWeekArr.indexOf(values.currentDay)), //initiate good index
+      //update the 5 days card with correct infos
+      functions.getCity();
     //domManipulations.changeWallpaper();
     values.fetchedObject = await functions.get5Days();
     selectors.weatherWrap

@@ -94,31 +94,34 @@ let domManipulations = {
   },
   changeDay: function (cardPointer) {
     cardPointer.querySelector(".day-field").textContent =
-      values.daysOfWeekArr[values.daysIndexTracker];
+      values.daysOfWeekArr[values.daysIndexTracker - 2];
   },
   changeIcon: function (cardPointer) {
     let imageLink =
-      values.eachDayInfo[values.daysIndexTracker].status.split(",");
+      values.fetchedObject["days"][
+        values.daysIndexTracker - 2
+      ].conditions.split(",");
     cardPointer
       .querySelector(".card-icon")
       .setAttribute("src", `img/${imageLink[0]}-card-icon.png`);
   },
   changeStatus: function (cardPointer) {
     cardPointer.querySelector(".weather-status-field").textContent =
-      values.eachDayInfo[values.daysIndexTracker].status;
+      values.fetchedObject["days"][values.daysIndexTracker - 2].conditions;
   },
   changeTemp: function (cardPointer) {
-    let value = values.fetchedObject["days"];
+    let value = values.fetchedObject["days"][values.daysIndexTracker];
     cardPointer.querySelector(".temp-field").textContent =
-      values.fetchedObject["days"][values.daysIndexTracker]["temp"];
+      values.fetchedObject["days"][values.daysIndexTracker - 2]["temp"];
   },
   changeWeatherFelt: function (cardPointer) {
     cardPointer.querySelector(".temp-felt").textContent =
-      values.eachDayInfo[values.daysIndexTracker].felt + "°C";
+      values.fetchedObject["days"][values.daysIndexTracker - 2].feelslike +
+      "°C";
   },
   changeProb: function (cardPointer) {
     cardPointer.querySelector(".prob-text").textContent =
-      values.eachDayInfo[values.daysIndexTracker].prob + "%";
+      values.eachDayInfo[values.daysIndexTracker - 2].prob + "%";
   },
   changeWallpaper: function () {
     let condition = document
